@@ -1,7 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Geist_Mono, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { themeScript } from "@/components/theme/theme-script";
+import { siteConfig } from "@/lib/site";
+import {
+  jsonLdScriptProps,
+  personSchema,
+  websiteSchema,
+} from "@/lib/seo/jsonLd";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,13 +29,70 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const isProduction =
+  (process.env.VERCEL_ENV ?? process.env.NODE_ENV) === "production";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Samin Israk — Full Stack Developer",
-    template: "%s · Samin Israk",
+    default: `${siteConfig.name} — ${siteConfig.role}`,
+    template: `%s · ${siteConfig.name}`,
   },
-  description:
-    "Full Stack Developer building modern web applications with React, Next.js, and Node.js.",
+  description: siteConfig.shortBio,
+  applicationName: siteConfig.name,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.shortBio,
+    url: siteConfig.url,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.shortBio,
+    creator: siteConfig.twitterHandle,
+  },
+  robots: isProduction
+    ? {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      }
+    : { index: false, follow: false },
+  icons: {
+    icon: [{ url: "/favicon.ico" }],
+  },
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0b" },
+  ],
 };
 
 export default function RootLayout({
@@ -51,6 +114,8 @@ export default function RootLayout({
           Skip to content
         </a>
         <ThemeProvider>{children}</ThemeProvider>
+        <script {...jsonLdScriptProps(personSchema())} />
+        <script {...jsonLdScriptProps(websiteSchema())} />
       </body>
     </html>
   );
