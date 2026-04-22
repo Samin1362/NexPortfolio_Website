@@ -208,3 +208,49 @@ html {
 .skip-link:focus-visible {
   top: 12px;
 }
+
+/* =============================================================
+   Utility animations
+   ============================================================= */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@keyframes hero-gradient-pan {
+  0%,
+  100% {
+    transform: translate3d(-10%, -10%, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(10%, 10%, 0) scale(1.15);
+  }
+}
+
+.hero-gradient {
+  animation: hero-gradient-pan 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient {
+    animation: none;
+  }
+}

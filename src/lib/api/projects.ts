@@ -9,6 +9,7 @@ import {
   type ReorderItem,
 } from "@/types/project";
 import type { FetchOptions } from "@/types/api";
+import { projectsFallback } from "@/content/projectsFallback";
 
 type ListResponse = { projects: RawProject[] };
 type SingleResponse = { project: RawProject };
@@ -37,6 +38,33 @@ export async function getProject(
     { revalidate: DEFAULT_DETAIL_REVALIDATE, ...options },
   );
   return mapProject(res.project);
+}
+
+export async function listProjectsSafe(
+  options: FetchOptions = {},
+): Promise<{ projects: Project[]; usedFallback: boolean }> {
+  try {
+    const projects = await listProjects(options);
+    return { projects, usedFallback: false };
+  } catch (error) {
+    console.warn(
+      "listProjectsSafe: backend unreachable — using bundled fallback",
+      error,
+    );
+    return { projects: projectsFallback, usedFallback: true };
+  }
+}
+
+export async function getProjectSafe(
+  id: number,
+  options: FetchOptions = {},
+): Promise<Project | null> {
+  try {
+    return await getProject(id, options);
+  } catch {
+    const local = projectsFallback.find((p) => p.id === id);
+    return local ?? null;
+  }
 }
 
 export async function listMyProjects(
