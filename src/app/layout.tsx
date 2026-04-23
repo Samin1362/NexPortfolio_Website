@@ -107,6 +107,14 @@ export default function RootLayout({
       className={`${inter.variable} ${fraunces.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
+        <link rel="preconnect" href="https://i.postimg.cc" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://i.postimg.cc" />
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin=""
+        />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-full flex flex-col bg-bg text-text font-sans">

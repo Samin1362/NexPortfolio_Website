@@ -55,10 +55,21 @@ export async function apiFetch<T>(
     headers.set("Content-Type", "application/json");
   }
 
+  // Explicit cache intent for SSG paths: if caller passes a positive
+  // revalidate window and didn't set their own cache option, lock the
+  // request into the data cache with force-cache. Keeps the behavior
+  // legible and defensive against future fetch-default changes.
+  const explicitCache =
+    init.cache ??
+    (typeof options.revalidate === "number" && options.revalidate > 0
+      ? "force-cache"
+      : undefined);
+
   const res = await fetch(buildUrl(path), {
     ...init,
     headers,
     signal: options.signal ?? init.signal,
+    ...(explicitCache ? { cache: explicitCache } : {}),
     ...(next ? { next } : {}),
   });
 
