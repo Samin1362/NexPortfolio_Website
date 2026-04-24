@@ -1,6 +1,6 @@
 import type { ApiBody, FetchOptions } from "@/types/api";
 
-const DEFAULT_BASE_URL = "http://localhost:5000";
+const DEFAULT_BASE_URL = "http://localhost:5001";
 
 function getBaseUrl() {
   return (
