@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site";
 
 export function ContactCTA() {
   return (
-    <Section spacing="lg">
+    <Section spacing="sm">
       <Container>
         <div className="relative overflow-hidden rounded-xl border border-border bg-bg-elevated p-8 md:p-12">
           <div

@@ -6,7 +6,7 @@ import { bioContent } from "@/content/bio";
 
 export function Hero() {
   return (
-    <Section spacing="lg" className="relative overflow-hidden">
+    <Section spacing="md" className="relative overflow-hidden">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 opacity-70"

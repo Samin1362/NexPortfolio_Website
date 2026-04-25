@@ -8,7 +8,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
   if (featured.length === 0) return null;
 
   return (
-    <Section spacing="lg">
+    <Section spacing="md">
       <Container>
         <div className="flex flex-col gap-10">
           <header className="flex flex-wrap items-end justify-between gap-4">

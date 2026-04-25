@@ -3,7 +3,7 @@ import { skillsData } from "@/content/skills";
 
 export function SkillsSection() {
   return (
-    <Section spacing="lg">
+    <Section spacing="md">
       <Container>
         <div className="flex flex-col gap-10">
           <header className="flex max-w-2xl flex-col gap-3">
