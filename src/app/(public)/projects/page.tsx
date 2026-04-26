@@ -26,9 +26,9 @@ export default async function ProjectsPage() {
   const types = deriveProjectTypes(projects);
 
   return (
-    <Section spacing="lg">
+    <Section spacing="md">
       <Container>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-8">
           <header className="flex max-w-2xl flex-col gap-3">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-text-subtle">
               Work
